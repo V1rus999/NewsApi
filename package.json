@@ -11,7 +11,8 @@
   "author": "Singularity Software",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "nodemon": "^1.18.3"
   },
   "devDependencies": {
     "eslint": "^5.4.0",

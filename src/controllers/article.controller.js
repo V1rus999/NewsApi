@@ -1,5 +1,4 @@
 const Article = require('../models/article.model');
-const Source = require('../models/news.source.model');
 
 function controller() {
   function getIndex(req, res) {
@@ -18,24 +17,26 @@ function controller() {
   }
 
   function create(req, res) {
-    const source = Source({ id: '1', name: 'NewsTest' });
-    source.save();
+    if (req.user) {
+      const article = new Article({
+        author: 'Test Author',
+        title: 'Test Title',
+        tags: ['Current', 'Test'],
+        description: 'Test Desc',
+        body: 'Test Body',
+        source: req.user.source,
+      });
 
-    const article = new Article({
-      author: 'Test Author',
-      title: 'Test Title',
-      tags: ['Current', 'Test'],
-      description: 'Test Desc',
-      body: 'Test Body',
-      source: source._id,
-    });
-
-    article.save((err) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-      res.send('Article Created');
-    });
+      article.save((err) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.send('Article Created');
+        }
+      });
+    } else {
+      res.send('Not authorised to create articles');
+    }
   }
 
   return { getIndex, create };

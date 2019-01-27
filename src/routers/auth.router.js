@@ -5,6 +5,9 @@ const authRouter = express.Router();
 
 function router() {
   authRouter.route('/login').get(controller.login);
+
+  authRouter.route('/createuser').get(controller.createUser);
+
   return authRouter;
 }
 
